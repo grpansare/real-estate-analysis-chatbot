@@ -83,13 +83,11 @@ const ChatInterface = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
-            size="lg"
           />
           <Button 
             variant="primary" 
             type="submit" 
             disabled={isLoading || !input.trim()}
-            size="lg"
           >
             {isLoading ? <Spinner animation="border" size="sm" /> : 'Send'}
           </Button>

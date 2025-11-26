@@ -175,24 +175,41 @@ def prepare_table_data(data):
     # Select key columns for display
     display_columns = [
         'final location', 'year', 'total sold - igr', 
-        'flat - weighted average rate', 'total_sales - igr',
-        'flat_sold - igr', 'office_sold - igr', 'shop_sold - igr'
+        'flat - weighted average rate', 'total_sales - igr'
     ]
     
     # Filter to only include columns that exist
     available_columns = [col for col in display_columns if col in data.columns]
     display_data = data[available_columns].copy()
     
-    # Rename for better readability
+    # Calculate derived metrics
+    # Avg Size = (Total Sales Value / Price/SqFt) / Total Sold Count
+    if all(col in display_data.columns for col in ['total_sales - igr', 'flat - weighted average rate', 'total sold - igr']):
+        try:
+            display_data['Avg_Size_SqFt'] = (
+                display_data['total_sales - igr'] / display_data['flat - weighted average rate']
+            ) / display_data['total sold - igr']
+            display_data['Avg_Size_SqFt'] = display_data['Avg_Size_SqFt'].round(0)
+        except:
+            display_data['Avg_Size_SqFt'] = 0
+    else:
+        display_data['Avg_Size_SqFt'] = 0
+
+    # Demand Score - using Total Sold as a proxy
+    if 'total sold - igr' in display_data.columns:
+         display_data['Demand_Score'] = display_data['total sold - igr']
+    else:
+         display_data['Demand_Score'] = 0
+
+    # Rename for better readability matching Frontend DataTable.jsx
     display_data = display_data.rename(columns={
         'final location': 'Area',
         'year': 'Year',
-        'total sold - igr': 'Total Sold',
-        'flat - weighted average rate': 'Avg Price/SqFt (₹)',
-        'total_sales - igr': 'Total Sales (₹)',
-        'flat_sold - igr': 'Flats Sold',
-        'office_sold - igr': 'Offices Sold',
-        'shop_sold - igr': 'Shops Sold'
+        'flat - weighted average rate': 'Price_Per_SqFt',
+        'total sold - igr': 'Transactions'
     })
+    
+    # Fill NaNs and ensure correct types
+    display_data = display_data.fillna(0)
     
     return display_data.to_dict('records')

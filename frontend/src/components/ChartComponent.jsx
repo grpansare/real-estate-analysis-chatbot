@@ -23,7 +23,7 @@ const ChartComponent = ({ data, areas }) => {
   const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088fe', '#00C49F'];
 
   return (
-    <div className="chart-container" style={{ height: '400px', width: '100%' }}>
+    <div className="chart-container">
       <h5 className="mb-4 text-center">Real Estate Trends Analysis</h5>
       <ResponsiveContainer width="100%" height="100%">
         {isTrend ? (
