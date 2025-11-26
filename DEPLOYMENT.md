@@ -73,7 +73,7 @@ The `netlify.toml` file is already configured in your project.
 
 1. Create a file `.env.production` in the `frontend` directory:
    ```
-   VITE_API_URL=https://your-backend-app.onrender.com/api
+   VITE_API_URL=https://real-estate-chatbot-api-isrj.onrender.com/api
    ```
    
    Replace `your-backend-app` with your actual Render app name.
