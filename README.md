@@ -4,7 +4,7 @@ A full-stack web application that analyzes real estate data using a chat interfa
 
 ## 🌐 Live Demo
 
-- **Frontend**: [Coming Soon - Deploy to Netlify]
+- **Frontend**: [https://real-estate-chatbot-grp.netlify.app/]
 - **Backend API**: [Coming Soon - Deploy to Render]
 
 ## ✨ Features
